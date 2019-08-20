@@ -1,0 +1,629 @@
+---
+title: Navegação Entre Activities
+author: wagner
+layout: home
+date: 2019-08-19
+---
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<!-- 2019-08-19 seg 18:41 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Navegação Entre Activities</title>
+<meta name="generator" content="Org mode" />
+<meta name="author" content="wagner" />
+<style type="text/css">
+ <!--/*--><![CDATA[/*><!--*/
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #ccc;
+    box-shadow: 3px 3px 3px #eee;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
+  }
+  pre.src {
+    position: relative;
+    overflow: visible;
+    padding-top: 1.2em;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    background-color: white;
+    top: -10px;
+    right: 10px;
+    padding: 3px;
+    border: 1px solid black;
+  }
+  pre.src:hover:before { display: inline;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { width: 90%; }
+  /*]]>*/-->
+</style>
+<script type="text/javascript">
+/*
+@licstart  The following is the entire license notice for the
+JavaScript code in this tag.
+
+Copyright (C) 2012-2018 Free Software Foundation, Inc.
+
+The JavaScript code in this tag is free software: you can
+redistribute it and/or modify it under the terms of the GNU
+General Public License (GNU GPL) as published by the Free Software
+Foundation, either version 3 of the License, or (at your option)
+any later version.  The code is distributed WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS
+FOR A PARTICULAR PURPOSE.  See the GNU GPL for more details.
+
+As additional permission under GNU GPL version 3 section 7, you
+may distribute non-source (e.g., minimized or compacted) forms of
+that code without the copy of the GNU GPL normally required by
+section 4, provided you include this license notice and a URL
+through which recipients can access the Corresponding Source.
+
+
+@licend  The above is the entire license notice
+for the JavaScript code in this tag.
+*/
+<!--/*--><![CDATA[/*><!--*/
+ function CodeHighlightOn(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(null != target) {
+     elem.cacheClassElem = elem.className;
+     elem.cacheClassTarget = target.className;
+     target.className = "code-highlighted";
+     elem.className   = "code-highlighted";
+   }
+ }
+ function CodeHighlightOff(elem, id)
+ {
+   var target = document.getElementById(id);
+   if(elem.cacheClassElem)
+     elem.className = elem.cacheClassElem;
+   if(elem.cacheClassTarget)
+     target.className = elem.cacheClassTarget;
+ }
+/*]]>*///-->
+</script>
+</head>
+<body>
+<div id="content">
+<h1 class="title">Navegação Entre Activities</h1>
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#org3fd0a02">1. Tema</a></li>
+<li><a href="#org831245e">2. Objetivo</a></li>
+<li><a href="#orgedaab1f">3. Duração</a></li>
+<li><a href="#orgcd7f5a8">4. Pré-Requisitos</a>
+<ul>
+<li><a href="#org7c3ede6">4.1. Conhecimentos Prévios</a></li>
+<li><a href="#orgc6eea2a">4.2. Recursos</a></li>
+</ul>
+</li>
+<li><a href="#org2dfaf5a">5. Procedimento didatico</a>
+<ul>
+<li><a href="#org08be177">5.1. Pontos principais da aplicação para estudo</a>
+<ul>
+<li><a href="#org1f54c82">5.1.1. Estrutura básica de um projeto</a></li>
+<li><a href="#orgedd9a65">5.1.2. View de "projeto" do Android Strudio</a></li>
+<li><a href="#orgb529d68">5.1.3. Diretório do módulo app</a></li>
+<li><a href="#org32e7416">5.1.4. Diretórios "src" e onde ficam o código das activities</a></li>
+<li><a href="#org7ac96ff">5.1.5. Intents como mensagens para outras activities</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#org7d1775e">6. Exercicios e Atividades de Reflexão/Fixação</a></li>
+<li><a href="#org80b2022">7. Avaliação</a></li>
+<li><a href="#org4a8d48a">8. Referencias</a></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org3fd0a02" class="outline-2">
+<h2 id="org3fd0a02"><span class="section-number-2">1</span> Tema</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Navegação Entre Activities
+</p>
+</div>
+</div>
+<div id="outline-container-org831245e" class="outline-2">
+<h2 id="org831245e"><span class="section-number-2">2</span> Objetivo</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Demostrar como fazer para a partir de uma activity abrir outra
+activity, inclusive passando dados para outra activity.
+Aproveitar a oportunidade para conhecer linear layout vertical e horizontal
+</p>
+</div>
+</div>
+<div id="outline-container-orgedaab1f" class="outline-2">
+<h2 id="orgedaab1f"><span class="section-number-2">3</span> Duração</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+2 Blocos
+</p>
+</div>
+</div>
+<div id="outline-container-orgcd7f5a8" class="outline-2">
+<h2 id="orgcd7f5a8"><span class="section-number-2">4</span> Pré-Requisitos</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+<div id="outline-container-org7c3ede6" class="outline-3">
+<h3 id="org7c3ede6"><span class="section-number-3">4.1</span> Conhecimentos Prévios</h3>
+<div class="outline-text-3" id="text-4-1">
+<p>
+Criar projeto
+Criar activities
+Rordar o projeto
+Reconhecer a estrutura de um projeto android para recriá-lo em sua máquina
+</p>
+</div>
+</div>
+<div id="outline-container-orgc6eea2a" class="outline-3">
+<h3 id="orgc6eea2a"><span class="section-number-3">4.2</span> Recursos</h3>
+<div class="outline-text-3" id="text-4-2">
+<p>
+Android Studio
+git/Github
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2dfaf5a" class="outline-2">
+<h2 id="org2dfaf5a"><span class="section-number-2">5</span> Procedimento didatico</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+Reproduzir, sob a orientação do professor, o projeto que está nesse
+link abaixo
+</p>
+
+<p>
+<a href="https://github.com/wagnermarques/somewritings/tree/rascunho/android/projetos/GMAPS15">https://github.com/wagnermarques/somewritings/tree/rascunho/android/projetos/GMAPS15</a>
+</p>
+</div>
+
+<div id="outline-container-org08be177" class="outline-3">
+<h3 id="org08be177"><span class="section-number-3">5.1</span> Pontos principais da aplicação para estudo</h3>
+<div class="outline-text-3" id="text-5-1">
+<p>
+O ponto principal é vc reconhecer a estrutura de um projeto e poder
+reproduzí-lo.
+Vou dar uma ajuda no que será necessário para essa aula
+</p>
+</div>
+
+<div id="outline-container-org1f54c82" class="outline-4">
+<h4 id="org1f54c82"><span class="section-number-4">5.1.1</span> Estrutura básica de um projeto</h4>
+<div class="outline-text-4" id="text-5-1-1">
+<pre class="example">
+    [wagner@Unknown GMAPS15]$ ls -l
+total 40
+drwxrwxr-x. 5 wagner wagner 4096 ago 18 23:06 app
+-rw-rw-r--. 1 wagner wagner  546 ago 18 15:52 build.gradle
+-rw-rw-r--. 1 wagner wagner  888 ago 18 16:01 GMAPS15.iml
+drwxrwxr-x. 3 wagner wagner 4096 ago 18 15:52 gradle
+-rw-rw-r--. 1 wagner wagner  728 ago 18 15:59 gradle.properties
+-rwxrw-r--. 1 wagner wagner 5296 ago 18 15:52 gradlew
+-rw-rw-r--. 1 wagner wagner 2260 ago 18 15:52 gradlew.bat
+-rw-rw-r--. 1 wagner wagner  485 ago 18 15:52 local.properties
+-rw-rw-r--. 1 wagner wagner   15 ago 18 15:52 settings.gradle
+</pre>
+
+<p>
+O diretório do projeto é o GMAPS15.
+Quando vc cria um projeto no android studio vc também está criando um
+diretório que vai conter todo o seu projeto.  Pra ver a estrutura de
+pastas do seu projeto é melhor entrar na view de projetos do android
+studio.
+Veja como fazer isso&#x2026;
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgedd9a65" class="outline-4">
+<h4 id="orgedd9a65"><span class="section-number-4">5.1.2</span> View de "projeto" do Android Strudio</h4>
+<div class="outline-text-4" id="text-5-1-2">
+<p>
+<img src="file:///home/wagner/wagnerdocri@gmail.com3/envs/env-dev/sources/somewritings/android/imgs/GMAPS15/view_pastas_do_projeto1.png" alt="view_pastas_do_projeto1.png" />
+<img src="file:///home/wagner/wagnerdocri@gmail.com3/envs/env-dev/sources/somewritings/android/imgs/GMAPS15/view_pastas_do_projeto2.png" alt="view_pastas_do_projeto2.png" />
+<img src="file:///home/wagner/wagnerdocri@gmail.com3/envs/env-dev/sources/somewritings/android/imgs/GMAPS15/view_pastas_do_projeto3.png" alt="view_pastas_do_projeto3.png" />
+<img src="file:///home/wagner/wagnerdocri@gmail.com3/envs/env-dev/sources/somewritings/android/imgs/GMAPS15/view_pastas_do_projeto4.png" alt="view_pastas_do_projeto4.png" />
+<img src="file:///home/wagner/wagnerdocri@gmail.com3/envs/env-dev/sources/somewritings/android/imgs/GMAPS15/view_pastas_do_projeto5.png" alt="view_pastas_do_projeto5.png" />
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb529d68" class="outline-4">
+<h4 id="orgb529d68"><span class="section-number-4">5.1.3</span> Diretório do módulo app</h4>
+<div class="outline-text-4" id="text-5-1-3">
+<div class="org-src-container">
+<pre class="src src-shell" id="org9668501"><span style="color: #ff7f24;">#</span><span style="color: #ff7f24;">starts code</span>
+ls -l $(<span style="color: #fa8072;">pwd</span>)/projetos/GMAPS15/app
+</pre>
+</div>
+
+<pre class="example">
+
+total 36
+-rw-rw-r--. 1 wagner wagner 16217 ago 18 23:06 app.iml
+drwxrwxr-x. 6 wagner wagner  4096 ago 18 16:15 build
+-rw-rw-r--. 1 wagner wagner  1003 ago 18 23:04 build.gradle
+drwxrwxr-x. 2 wagner wagner  4096 ago 18 15:52 libs
+-rw-rw-r--. 1 wagner wagner   751 ago 18 15:52 proguard-rules.pro
+drwxrwxr-x. 7 wagner wagner  4096 ago 18 15:53 src
+
+</pre>
+
+
+
+<p>
+É possível trabalhar com mais de um módulo, mas no geral a gente
+usa mesmo um modulo app, como vc pode ver acima
+</p>
+</div>
+</div>
+
+<div id="outline-container-org32e7416" class="outline-4">
+<h4 id="org32e7416"><span class="section-number-4">5.1.4</span> Diretórios "src" e onde ficam o código das activities</h4>
+<div class="outline-text-4" id="text-5-1-4">
+<p>
+Quem diria que no diretório "src" estariam todos os sources hein? 
+Pois é, o sources das nossas ativities também, só que o nome do
+pacote da classe da activity representa a árvore de diretório onde
+ela está. Se tiver dúvida sobre isso não leva a dúvida pra casa
+não, pergunta pro professor.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell" id="org6a61d24"><span style="color: #ff7f24;">#</span><span style="color: #ff7f24;">starts code</span>
+ls -l $(<span style="color: #fa8072;">pwd</span>)/projetos/GMAPS15/app/src/main/java/eteczl/edu/br/gmaps15
+</pre>
+</div>
+
+<pre class="example">
+
+total 20
+-rw-rw-r--. 1 wagner wagner 2723 ago 19 01:09 ActivityPrincipal.java
+-rw-rw-r--. 1 wagner wagner 2634 ago 19 00:00 MapsActivity.java
+-rw-rw-r--. 1 wagner wagner  373 ago 18 23:55 TelaLinearLayoutHorizontal.java
+-rw-rw-r--. 1 wagner wagner  369 ago 18 23:51 TelaLinearLayoutVertical.java
+-rw-rw-r--. 1 wagner wagner 1280 ago 19 01:03 TelaRecebeDados.java
+
+</pre>
+
+<p>
+Então, esse projeto tem essas activities. Uma principal que terá
+vários botões que vão servir pra abrir as demais activities.
+</p>
+
+<p>
+A Activity do mapa não funciona o mapa porque a gente ainda vai ter
+essa aula.
+</p>
+
+<p>
+Lembrando que essas activities terão seus repectivos layout xmls no
+diretório res. O Nome da classe da activity tem semelhança com o
+nome de seu arquivo de layout. Vê se dá pra perceber&#x2026;
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell" id="org450bdd6"><span style="color: #ff7f24;">#</span><span style="color: #ff7f24;">starts code</span>
+ls -l $(<span style="color: #fa8072;">pwd</span>)/projetos/GMAPS15/app/src/main/res/layout
+</pre>
+</div>
+
+<pre class="example">
+
+total 20
+-rw-rw-r--. 1 wagner wagner  424 ago 18 15:59 activity_maps.xml
+-rw-rw-r--. 1 wagner wagner 2509 ago 18 23:40 activity_principal.xml
+-rw-rw-r--. 1 wagner wagner 1604 ago 19 00:36 activity_tela_linear_layout_horizontal.xml
+-rw-rw-r--. 1 wagner wagner 1404 ago 19 00:36 activity_tela_linear_layout_vertical.xml
+-rw-rw-r--. 1 wagner wagner 1041 ago 19 00:37 activity_tela_recebe_dados.xml
+
+</pre>
+
+
+<p>
+<b>Sua tarefa é criar no seu projeto cada uma dessas activities</b>
+Vou colocar a imagem delas pra vc ter uma idéia de como elas se
+parecem&#x2026;
+</p>
+
+<p>
+<img src="file:///home/wagner/wagnerdocri@gmail.com3/envs/env-dev/sources/somewritings/android/imgs/GMAPS15/activity_principal.png" alt="activity_principal.png" />
+<img src="file:///home/wagner/wagnerdocri@gmail.com3/envs/env-dev/sources/somewritings/android/imgs/GMAPS15/activity_linear_layout_vertical.png" alt="activity_linear_layout_vertical.png" />
+<img src="file:///home/wagner/wagnerdocri@gmail.com3/envs/env-dev/sources/somewritings/android/imgs/GMAPS15/activity_linear_layout_horizontal.png" alt="activity_linear_layout_horizontal.png" />
+<img src="file:///home/wagner/wagnerdocri@gmail.com3/envs/env-dev/sources/somewritings/android/imgs/GMAPS15/activity_mapa.png" alt="activity_mapa.png" />
+<img src="file:///home/wagner/wagnerdocri@gmail.com3/envs/env-dev/sources/somewritings/android/imgs/GMAPS15/acitivity_que_recebe_dados.png" alt="acitivity_que_recebe_dados.png" />
+</p>
+
+<p>
+Claro que vc vai desenhar essas telas, mas tem que observar o
+layout delas. O professor vai explicar cada um desses layouts em
+sala de aula. 
+Qdo vc desenhar as telas, dá uma conferida se o seu xml ficou
+semelhante ao xml do projeto.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7ac96ff" class="outline-4">
+<h4 id="org7ac96ff"><span class="section-number-4">5.1.5</span> Intents como mensagens para outras activities</h4>
+<div class="outline-text-4" id="text-5-1-5">
+<div class="org-src-container">
+<pre class="src src-shell" id="orgf06b0c1"><span style="color: #ff7f24;">#</span><span style="color: #ff7f24;">starts code</span>
+<span style="color: #b0c4de;">pwd</span>
+</pre>
+</div>
+
+<pre class="example">
+
+/home/wagner/wagnerdocri@gmail.com3/envs/env-dev/sources/somewritings/android
+
+</pre>
+
+<div class="org-src-container">
+<pre class="src src-java"><span style="color: #00ffff;">package</span> eteczl.edu.br.<span style="color: #7fffd4;">gmaps15</span>;
+
+<span style="color: #00ffff;">import</span> <span style="color: #7fffd4;">android</span>.<span style="color: #7fffd4;">content</span>.<span style="color: #98fb98;">Intent</span>;
+<span style="color: #00ffff;">import</span> <span style="color: #7fffd4;">android</span>.<span style="color: #7fffd4;">support</span>.<span style="color: #7fffd4;">v7</span>.<span style="color: #7fffd4;">app</span>.<span style="color: #98fb98;">AppCompatActivity</span>;
+<span style="color: #00ffff;">import</span> <span style="color: #7fffd4;">android</span>.<span style="color: #7fffd4;">os</span>.<span style="color: #98fb98;">Bundle</span>;
+<span style="color: #00ffff;">import</span> <span style="color: #7fffd4;">android</span>.<span style="color: #7fffd4;">view</span>.<span style="color: #98fb98;">View</span>;
+<span style="color: #00ffff;">import</span> <span style="color: #7fffd4;">android</span>.<span style="color: #7fffd4;">widget</span>.<span style="color: #98fb98;">Button</span>;
+<span style="color: #00ffff;">import</span> <span style="color: #7fffd4;">android</span>.<span style="color: #7fffd4;">widget</span>.<span style="color: #98fb98;">EditText</span>;
+<span style="color: #00ffff;">import</span> <span style="color: #7fffd4;">android</span>.<span style="color: #7fffd4;">widget</span>.<span style="color: #98fb98;">Toast</span>;
+
+<span style="color: #00ffff;">public</span> <span style="color: #00ffff;">class</span> <span style="color: #98fb98;">ActivityPrincipal</span> <span style="color: #00ffff;">extends</span> <span style="color: #98fb98;">AppCompatActivity</span> {
+
+    <span style="color: #00ffff;">private</span> <span style="color: #98fb98;">Button</span> <span style="color: #eedd82;">btnQueAbreTelaComLinearLayoutVertical</span>;
+    <span style="color: #00ffff;">private</span> <span style="color: #98fb98;">Button</span> <span style="color: #eedd82;">btnQueAbreTelaComLinearLayoutHorizontal</span>;;
+    <span style="color: #00ffff;">private</span> <span style="color: #98fb98;">Button</span> <span style="color: #eedd82;">btnQueAbreOMapa</span>;
+    <span style="color: #00ffff;">private</span> <span style="color: #98fb98;">Button</span> <span style="color: #eedd82;">btnQueAbreTelaPassandoDadosPraEla</span>;
+
+    <span style="color: #7fffd4;">@Override</span>
+    <span style="color: #00ffff;">protected</span> <span style="color: #98fb98;">void</span> <span style="color: #87cefa;">onCreate</span>(<span style="color: #98fb98;">Bundle</span> <span style="color: #eedd82;">savedInstanceState</span>) {
+        <span style="color: #00ffff;">super</span>.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_principal);
+
+        btnQueAbreTelaComLinearLayoutVertical = (<span style="color: #98fb98;">Button</span>) findViewById(R.id.btnAbreLinearLayoutVertical);
+        btnQueAbreTelaComLinearLayoutHorizontal  = (<span style="color: #98fb98;">Button</span>) findViewById(R.id.btnAbreLinearLayoutHorizontal);
+        btnQueAbreOMapa  = (<span style="color: #98fb98;">Button</span>) findViewById(R.id.btnAbreMapa);
+        btnQueAbreTelaPassandoDadosPraEla  = (<span style="color: #98fb98;">Button</span>) findViewById(R.id.btnAbreTelaPassandoDados);
+
+        btnQueAbreTelaComLinearLayoutVertical.setOnClickListener(<span style="color: #00ffff;">new</span> <span style="color: #7fffd4;">View</span>.<span style="color: #98fb98;">OnClickListener</span>(){
+            <span style="color: #7fffd4;">@Override</span>
+            <span style="color: #00ffff;">public</span> <span style="color: #98fb98;">void</span> <span style="color: #87cefa;">onClick</span>(<span style="color: #98fb98;">View</span> <span style="color: #eedd82;">v</span>) {
+                <span style="color: #ff7f24;">//</span><span style="color: #ff7f24;">https://developer.android.com/guide/components/intents-filters?hl=pt-br</span>
+                <span style="color: #98fb98;">Intent</span> <span style="color: #eedd82;">intent</span> = <span style="color: #00ffff;">new</span> <span style="color: #98fb98;">Intent</span>(ActivityPrincipal.<span style="color: #00ffff;">this</span>, TelaLinearLayoutVertical.<span style="color: #00ffff;">class</span>);
+                startActivity(intent);
+            }
+        });
+        btnQueAbreTelaComLinearLayoutHorizontal.setOnClickListener(<span style="color: #00ffff;">new</span> <span style="color: #7fffd4;">View</span>.<span style="color: #98fb98;">OnClickListener</span>(){
+            <span style="color: #7fffd4;">@Override</span>
+            <span style="color: #00ffff;">public</span> <span style="color: #98fb98;">void</span> <span style="color: #87cefa;">onClick</span>(<span style="color: #98fb98;">View</span> <span style="color: #eedd82;">v</span>) {
+                <span style="color: #98fb98;">Intent</span> <span style="color: #eedd82;">intent</span> = <span style="color: #00ffff;">new</span> <span style="color: #98fb98;">Intent</span>(ActivityPrincipal.<span style="color: #00ffff;">this</span>, TelaLinearLayoutHorizontal.<span style="color: #00ffff;">class</span>);
+                startActivity(intent);
+            }
+        });
+        btnQueAbreOMapa.setOnClickListener(<span style="color: #00ffff;">new</span> <span style="color: #7fffd4;">View</span>.<span style="color: #98fb98;">OnClickListener</span>(){
+            <span style="color: #7fffd4;">@Override</span>
+            <span style="color: #00ffff;">public</span> <span style="color: #98fb98;">void</span> <span style="color: #87cefa;">onClick</span>(<span style="color: #98fb98;">View</span> <span style="color: #eedd82;">v</span>) {
+                <span style="color: #98fb98;">Intent</span> <span style="color: #eedd82;">intent</span> = <span style="color: #00ffff;">new</span> <span style="color: #98fb98;">Intent</span>(ActivityPrincipal.<span style="color: #00ffff;">this</span>, MapsActivity.<span style="color: #00ffff;">class</span>);
+                startActivity(intent);
+            }
+        });
+        btnQueAbreTelaPassandoDadosPraEla.setOnClickListener(<span style="color: #00ffff;">new</span> <span style="color: #7fffd4;">View</span>.<span style="color: #98fb98;">OnClickListener</span>(){
+            <span style="color: #7fffd4;">@Override</span>
+            <span style="color: #00ffff;">public</span> <span style="color: #98fb98;">void</span> <span style="color: #87cefa;">onClick</span>(<span style="color: #98fb98;">View</span> <span style="color: #eedd82;">v</span>) {
+                <span style="color: #98fb98;">EditText</span> <span style="color: #eedd82;">editTextNome</span> = (<span style="color: #98fb98;">EditText</span>) findViewById(R.id.editTextNome);
+                Toast.makeText(ActivityPrincipal.<span style="color: #00ffff;">this</span>,<span style="color: #ffa07a;">"Vamos passar pra outra activity : "</span>+editTextNome.getText(),<span style="color: #7fffd4;">Toast</span>.LENGTH_LONG).show();
+                <span style="color: #98fb98;">Intent</span> <span style="color: #eedd82;">intent</span> = <span style="color: #00ffff;">new</span> <span style="color: #98fb98;">Intent</span>(ActivityPrincipal.<span style="color: #00ffff;">this</span>, TelaRecebeDados.<span style="color: #00ffff;">class</span>);
+                intent.putExtra(<span style="color: #ffa07a;">"nome"</span>, editTextNome.getText().toString());
+                startActivity(intent);
+            }
+        });
+
+    }
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7d1775e" class="outline-2">
+<h2 id="org7d1775e"><span class="section-number-2">6</span> Exercicios e Atividades de Reflexão/Fixação</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+Então, eu sei que recriar a aplicação já é uma atividade
+interessante, desde que vc não copie e cole o código.
+Mas vc vai ter que fazer algo novo. Na verdade não é novo, é só mais
+do mesmo.
+Vc vai criar os botoes "voltar" das outras activities que navega pra
+activity principal. Pra isso vc vai usar a mesma estrutura de código
+já apresentada e explicada pelo professor.
+Além disso vc vai mostrar rodando no seu celular
+E também enviar o link do github para o email do professor
+wagner.marques3@etec.sp.gov.br
+</p>
+</div>
+</div>
+
+<div id="outline-container-org80b2022" class="outline-2">
+<h2 id="org80b2022"><span class="section-number-2">7</span> Avaliação</h2>
+<div class="outline-text-2" id="text-7">
+<p>
+Reproduzir este projeto no seu github
+Enviar o link para o professor
+Implementar um botão voltar em cada uma das activities
+Lembrando que os projetos realizados em sala devem ser entregues e
+contam como menção.
+</p>
+</div>
+</div>
+<div id="outline-container-org4a8d48a" class="outline-2">
+<h2 id="org4a8d48a"><span class="section-number-2">8</span> Referencias</h2>
+</div>
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: wagner</p>
+<p class="date">Created: 2019-08-19 seg 18:41</p>
+<p class="validation"><a href="http://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
+</body>
+</html>
